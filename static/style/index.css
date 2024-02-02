@@ -58,3 +58,11 @@ button {
 #button-right {
     border-radius: 0 0 2vw 0;
 }
+
+a {
+    color: white;
+    background-color: black;
+    font-family: "Average Sans", sans-serif;
+    font-size: 16px;
+    text-decoration: none;
+}
