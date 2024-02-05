@@ -52,6 +52,9 @@ export default {
 }
 
 .post p {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
     padding-top: 2vh;
     padding-left: 2vh;
     font-family: "DM Sans", sans-serif;

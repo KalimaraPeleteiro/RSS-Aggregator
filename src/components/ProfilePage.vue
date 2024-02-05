@@ -20,7 +20,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 #subtitle {
     font-family: "McLaren", sans-serif;
@@ -38,6 +38,7 @@ export default {
 
 #profile-section ul {
     margin-top: 2vh;
+    padding-left: 0;
 }
 
 #profile-section button {

@@ -52,6 +52,9 @@ export default {
     padding-top: 2vh;
     padding-left: 2vh;
     font-family: "DM Sans", sans-serif;
+    margin-top: 0;
+    margin-left: 0;
+    margin-bottom: 0;
 }
 
 .feed-title {
