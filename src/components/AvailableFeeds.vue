@@ -2,31 +2,38 @@
     <MenuTop></MenuTop>
     <p id="subtitle">Feeds Disponíveis</p>
 
-    <div class="feed">
-        <p class="feed-title">CNN</p>
-        <p class="feed-description">Um canal de notícias.</p>
+    <div class="feed" v-for="feed in apiData" :key="feed.id">
+        <p class="feed-title">{{ feed.nome }}</p>
+        <p class="feed-description">{{ feed.url }}</p>
         <button class="feed-button">Seguir</button>
     </div>
 
-    <div class="feed">
-        <p class="feed-title">New York Times</p>
-        <p class="feed-description">Um canal de notícias.</p>
-        <button class="feed-button">Deixar de Seguir</button>
-    </div>
-
-    <div class="feed">
-        <p class="feed-title">The Guardian</p>
-        <p class="feed-description">Um canal de notícias.</p>
-        <button class="feed-button">Seguir</button>
-    </div>
 </template>
 
 <script>
 import MenuTop from './MenuTop.vue';
+import axios from 'axios';
+
 export default {
     name: "AvailableFeeds",
     components: {
         MenuTop,
+    },
+
+    data() {
+        return {
+            apiData:null,
+        };
+    },
+    
+    mounted() {
+        axios.get("http://localhost:8000/v1/feeds/all")
+            .then(response => {
+                this.apiData = response.data
+            })
+            .catch(error => {
+                console.error("Erro ao fazer a requisição: ", error)
+            })
     }
 }
 </script>

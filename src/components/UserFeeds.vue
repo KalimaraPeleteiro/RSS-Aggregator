@@ -1,35 +1,42 @@
 <template>
     <MenuTop></MenuTop>
     <p id="subtitle">Posts</p>
-    
-    <div class="post">
-        <p class="post-title">Título de exemplo</p>
-        <p class="post-description">O Campeonato Mundial de Futebol, mais conhecido no Brasil por Copa do Mundo ou simplesmente Copa e também conhecida em Portugal como Campeonato do Mundo de Futebol, Campeonato Mundial FIFA ou apenas como Mundial,[1][2] é uma competição internacional de futebol que ocorre a cada quatro anos, com exceção de 1942 e 1946, quando não aconteceu devido à Segunda Guerra Mundial.</p>
-        <p class="post-feed">Feed: Wikipedia</p>
-        <button class="post-button">Link</button>
-    </div>
 
-    <div class="post">
-        <p class="post-title">Título de exemplo</p>
-        <p class="post-description">William Lloyd Hely foi um oficial militar da Real Força Aérea Australiana (RAAF). Formou-se no Real Colégio Militar, em 1930, antes de ser transferido para a RAAF como piloto cadete. Hely chamou a atenção do público em 1936–37, primeiro quando caiu num voo de pesquisa no Território do Norte e, mais tarde, quando empreendeu duas missões bem-sucedidas para localizar aeronaves desaparecidas nas mesmas proximidades.</p>
+    <div class="post" v-for="post in apiData" :key="post.id">
+        <p class="post-title"> {{ post.titulo }}</p>
+        <p class="post-description"> {{ post.descricao }}</p>
         <p class="post-feed">Feed: Wikipedia</p>
-        <button class="post-button">Link</button>
-    </div>
-
-    <div class="post">
-        <p class="post-title">Título de exemplo</p>
-        <p class="post-description">A Austrália entrou na Segunda Guerra Mundial em 3 de setembro de 1939, após a aceitação do governo da declaração de guerra do Reino Unido à Alemanha Nazista. Após os ataques contra os países aliados, o governo australiano declarou mais tarde a guerra contra outros membros das potências do Eixo, incluindo o Reino da Itália em 11 de junho de 1940 e o Império do Japão em 8 de dezembro de 1941.</p>
-        <p class="post-feed">Feed: Wikipedia</p>
-        <button class="post-button">Link</button>
+        <button class="post-button"><a :href="post.url">Link</a></button>
     </div>
 </template>
 
 <script>
 import MenuTop from './MenuTop.vue';
+import axios from 'axios';
+
+axios.defaults.headers.common['Authorization'] = 'ApiKey fd3de1d9e3a9ad88138aba3b73f879b0f3a208240e05140cb125761784358a87';
+
 export default {
     name: "UserFeeds",
     components: {
         MenuTop,
+    },
+
+    data() {
+        return {
+            apiData:null,
+        };
+    },
+    
+    mounted() {
+        axios.get("http://localhost:8000/v1/users/my_feeds/posts")
+            .then(response => {
+                this.apiData = response.data
+                console.log("Funciona!")
+            })
+            .catch(error => {
+                console.error("Erro ao fazer a requisição: ", error)
+            })
     }
 }
 </script>
@@ -80,5 +87,10 @@ export default {
     border: 1px solid #2B2B2B;
     border-radius: 1vw 1vw 1vw 1vw;
     width: 10vw;
+}
+
+a {
+    text-decoration: none;
+    color: white;
 }
 </style>
