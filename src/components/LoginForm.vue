@@ -1,16 +1,18 @@
 <template>
-    <div class="container">
-        <img id="logo" src="../assets/LogoRemade.svg">
-    </div>
+    <div id="login-form">
+        <div class="container">
+            <img id="logo" src="../assets/LogoRemade.svg">
+        </div>
 
-    <div class="container-input">
-        <input id="first-input" placeholder="email" type="email">
-        <input placeholder="senha" type="password">
-    </div>
+        <div class="container-input">
+            <input id="first-input" placeholder="email" type="email">
+            <input placeholder="senha" type="password">
+        </div>
 
-    <div class="container">
-        <button id="button-left"><a href="user_created.html">Criar Usuário</a></button>
-        <button id="button-right"><a href="user_feeds.html">Fazer Login</a></button>
+        <div class="container">
+            <button id="button-left"><router-link to="/signin">Criar Usuário</router-link></button>
+            <button id="button-right"><router-link to="/userfeeds">Fazer Login</router-link></button>
+        </div>
     </div>
 </template>
 
@@ -22,7 +24,7 @@ export default {
 
 <style scoped>
 * {
- background-color: #2B2B2B;
+    background-color: #2B2B2B;
 }
 
 .container {
@@ -88,5 +90,9 @@ a {
     font-family: "Average Sans", sans-serif;
     font-size: 16px;
     text-decoration: none;
+}
+
+#login-form {
+    height: 100vh;
 }
 </style>

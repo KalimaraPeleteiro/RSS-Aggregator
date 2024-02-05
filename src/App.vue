@@ -1,20 +1,18 @@
 <template>
-  <LoginForm></LoginForm>
+  <RouterView></RouterView>
 </template>
 
 <script>
-import LoginForm from './components/LoginForm.vue'
-
 export default {
   name: 'App',
-  components: {
-    LoginForm
-  }
 }
 </script>
 
 <style>
-* {
- background-color: #2B2B2B;
+html, body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  min-height: 100vh; /* Ensure full viewport height */
 }
 </style>
