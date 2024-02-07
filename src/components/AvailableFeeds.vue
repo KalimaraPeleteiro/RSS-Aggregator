@@ -5,7 +5,7 @@
     <div class="feed" v-for="feed in apiData" :key="feed.id">
         <p class="feed-title">{{ feed.nome }}</p>
         <p class="feed-description">{{ feed.url }}</p>
-        <button class="feed-button">Seguir</button>
+        <button class="feed-button" @click="followFeed(feed.id)">Seguir</button>
     </div>
 
 </template>
@@ -34,6 +34,27 @@ export default {
             .catch(error => {
                 console.error("Erro ao fazer a requisição: ", error)
             })
+    },
+
+    methods: {
+        async followFeed(id) {
+            const ApiKey = sessionStorage.getItem("ApiKey");
+            axios.defaults.headers.common['Authorization'] = `ApiKey ${ApiKey}`;
+
+            try {
+                const data = {
+                    feed_id: id
+                };
+
+                const response = await axios.post("http://localhost:8000/v1/users/follow", data);
+
+                if (response.status === 201) {
+                    location.reload();
+                }
+            } catch (error){
+                console.error(error);
+            }
+        }
     }
 }
 </script>

@@ -36,11 +36,10 @@ export default {
                     senha: this.password
                 };
 
-                console.log(data);
-
                 const response = await axios.post("http://localhost:8000/v1/login", data);
 
                 if (response.status === 200) {
+                    sessionStorage.setItem("ApiKey", response.data.ApiKey);
                     this.$router.push('/userfeeds')
                 }
 
