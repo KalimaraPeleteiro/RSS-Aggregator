@@ -3,9 +3,10 @@
     <p id="subtitle">Feeds Disponíveis</p>
 
     <div class="feed" v-for="feed in apiData" :key="feed.id">
-        <p class="feed-title">{{ feed.nome }}</p>
-        <p class="feed-description">{{ feed.url }}</p>
-        <button class="feed-button" @click="followFeed(feed.id)">Seguir</button>
+        <p class="feed-title">{{ feed.Name }}</p>
+        <p class="feed-description">{{ feed.Url }}</p>
+        <button class="feed-button" @click="unfollowFeed(feed.ID)" v-if="feed.IsFollowing">Deixar de Seguir</button>
+        <button class="feed-button" @click="followFeed(feed.ID)" v-else>Seguir</button>
     </div>
 
 </template>
@@ -27,6 +28,9 @@ export default {
     },
     
     mounted() {
+        const ApiKey = sessionStorage.getItem("ApiKey");
+        axios.defaults.headers.common['Authorization'] = `ApiKey ${ApiKey}`;
+
         axios.get("http://localhost:8000/v1/feeds/all")
             .then(response => {
                 this.apiData = response.data
@@ -49,6 +53,22 @@ export default {
                 const response = await axios.post("http://localhost:8000/v1/users/follow", data);
 
                 if (response.status === 201) {
+                    location.reload();
+                }
+            } catch (error){
+                console.error(error);
+            }
+        },
+
+        async unfollowFeed(id) {
+            console.log(id);
+            const ApiKey = sessionStorage.getItem("ApiKey");
+            axios.defaults.headers.common['Authorization'] = `ApiKey ${ApiKey}`;
+
+            try {
+                const response = await axios.delete(`http://localhost:8000/v1/users/unfollow/${id}`);
+
+                if (response.status === 200) {
                     location.reload();
                 }
             } catch (error){
