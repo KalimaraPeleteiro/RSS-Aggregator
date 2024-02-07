@@ -10,7 +10,7 @@
         </div>
 
         <div class="container">
-            <button id="button-left"><router-link to="/signin">Criar Usuário</router-link></button>
+            <button id="button-left" @click="handleSignIn">Criar Usuário</button>
             <button id="button-right" @click="handleLogin">Fazer Login</button>
         </div>
     </div>
@@ -40,12 +40,36 @@ export default {
 
                 if (response.status === 200) {
                     sessionStorage.setItem("ApiKey", response.data.ApiKey);
+                    sessionStorage.setItem("Username", this.username);
+                    sessionStorage.setItem("Password", this.password);
                     this.$router.push('/userfeeds')
                 }
 
             } catch (error) {
                 if (error.response.status == 404) {
                     alert("Nome de usuário ou senha incorretos. Talvez você digitou errado?")
+                } else {
+                    console.error("Erro!")
+                }
+            }
+        },
+
+        async handleSignIn() {
+            try {
+                const data = {
+                    nome: this.username,
+                    senha: this.password
+                };
+
+                const response = await axios.post("http://localhost:8000/v1/users/create", data);
+
+                if (response.status === 201) {
+                    this.$router.push('/signin')
+                }   
+
+            } catch (error) {
+                if (error.response.status == 400) {
+                    alert("Problema na criação de usuário.")
                 } else {
                     console.error("Erro!")
                 }

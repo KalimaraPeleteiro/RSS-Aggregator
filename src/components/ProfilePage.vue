@@ -3,10 +3,9 @@
     <p id="subtitle">Seu Perfil</p>
 
     <div id="profile-section">
-        <ul>Nome de Usuário: Nome Teste <button>Alterar Nome?</button> </ul> 
-        <ul>Senha: ***** <button>Alterar Senha?</button></ul>
-        <ul>Criado em: 00/00/0000</ul>
-        <ul>Chave de API: j1ioejqw-2321-123wqj12</ul>
+        <ul>Nome de Usuário: {{ username }} </ul> 
+        <ul>Senha: {{ maskedPassword }}</ul>
+        <ul>Chave de API: {{ apiKey }}</ul>
     </div>
 </template>
 
@@ -16,6 +15,18 @@ export default {
     name: "ProfilePage",
     components: {
         MenuTop,
+    },
+
+    computed: {
+        username() {
+            return sessionStorage.getItem("Username");
+        },
+        maskedPassword() {
+            return "*" + Array(sessionStorage.getItem("Password").length).join('*');
+        },
+        apiKey() {
+            return sessionStorage.getItem("ApiKey");
+        }
     }
 }
 </script>
