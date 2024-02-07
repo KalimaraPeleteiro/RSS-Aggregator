@@ -5,20 +5,54 @@
         </div>
 
         <div class="container-input">
-            <input id="first-input" placeholder="email" type="email">
-            <input placeholder="senha" type="password">
+            <input id="first-input" v-model="username" placeholder="Nome de Usuário" type="text">
+            <input placeholder="senha" v-model="password" type="password">
         </div>
 
         <div class="container">
             <button id="button-left"><router-link to="/signin">Criar Usuário</router-link></button>
-            <button id="button-right"><router-link to="/userfeeds">Fazer Login</router-link></button>
+            <button id="button-right" @click="handleLogin">Fazer Login</button>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    name: 'LoginForm'
+    name: 'LoginForm',
+    methods: {
+        data() {
+            return {
+                username: '',
+                password: ''
+            };
+        },
+
+        async handleLogin() {
+            try {
+                const data = {
+                    nome: this.username,
+                    senha: this.password
+                };
+
+                console.log(data);
+
+                const response = await axios.post("http://localhost:8000/v1/login", data);
+
+                if (response.status === 200) {
+                    this.$router.push('/userfeeds')
+                }
+
+            } catch (error) {
+                if (error.response.status == 404) {
+                    alert("Nome de usuário ou senha incorretos. Talvez você digitou errado?")
+                } else {
+                    console.error("Erro!")
+                }
+            }
+        }
+    }
 }
 </script>
 

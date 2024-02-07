@@ -32,7 +32,6 @@ export default {
         axios.get("http://localhost:8000/v1/users/my_feeds/posts")
             .then(response => {
                 this.apiData = response.data
-                console.log("Funciona!")
             })
             .catch(error => {
                 console.error("Erro ao fazer a requisição: ", error)
